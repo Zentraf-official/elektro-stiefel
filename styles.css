@@ -409,6 +409,12 @@ html.js .corriente__pulso{opacity:1}
 }
 
 /* ══ MÓVIL: que el hero quepa entero ════════════════════════════════ */
+/* En móvil la cabecera interior lleva el personaje muy bajado de opacidad: a
+   390 px el texto le cae encima y el amarillo de sus franjas molesta al leer. */
+@media (max-width:760px){
+  .hero-mini__media{opacity:.18; height:min(62%,330px); right:-14px}
+}
+
 @media (max-width:680px){
   .wrap{padding:0 24px}
   .hero{padding-top:100px}
