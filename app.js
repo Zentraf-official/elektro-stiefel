@@ -158,23 +158,31 @@
     });
     if (actual.length) lineas.push({ items: actual });
 
-    lineas.forEach(function (l) {
+    /* Fuera los espacios sueltos que quedan colgando del texto original. Se hace
+       ANTES de montar las máscaras: después ya no se pueden distinguir de los
+       separadores que ponemos nosotros (justo abajo). */
+    Array.prototype.slice.call(el.childNodes).forEach(function (n) {
+      if (n.nodeType === 3 && !n.textContent.trim()) el.removeChild(n);
+    });
+
+    lineas.forEach(function (l, i) {
+      /* Entre dos máscaras va un ESPACIO DE VERDAD. Las máscaras son `display:block`,
+         así que ese espacio no se ve ni ocupa altura (queda en un bloque anónimo que
+         colapsa), pero sí cuenta en `textContent` — y sin él el titular se leía
+         «auchwenn's mal dunkel wird.» en todo lo que no pinta la página: Google,
+         lectores de pantalla y los revisores. Comprobado midiendo la altura: no
+         cambia ni una décima. Es el error «wirüber» del registro, cerrado del todo. */
+      if (i > 0) el.appendChild(doc.createTextNode(' '));
       var mascara = doc.createElement('span');
       mascara.className = 'linea-mask';
       var dentro = doc.createElement('span');
       dentro.className = 'linea-int';
       el.appendChild(mascara);
       mascara.appendChild(dentro);
-      l.items.forEach(function (u, i) {
+      l.items.forEach(function (u, j) {
         dentro.appendChild(u);
-        if (i < l.items.length - 1) dentro.appendChild(doc.createTextNode(' '));
+        if (j < l.items.length - 1) dentro.appendChild(doc.createTextNode(' '));
       });
-    });
-
-    // Fuera los espacios sueltos que quedan colgando: si no, al leer el texto
-    // (Google, lectores de pantalla) las palabras salen pegadas.
-    Array.prototype.slice.call(el.childNodes).forEach(function (n) {
-      if (n.nodeType === 3 && !n.textContent.trim()) el.removeChild(n);
     });
     return $$('.linea-mask', el);
   }
