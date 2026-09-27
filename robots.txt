@@ -1,0 +1,5 @@
+# Elektro Stiefel GmbH — Entwurf (Vorschau von Zentraf)
+User-agent: *
+Allow: /
+
+Sitemap: https://zentraf-official.github.io/elektro-stiefel/sitemap.xml

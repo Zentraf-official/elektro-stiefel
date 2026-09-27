@@ -1,0 +1,423 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   TIPOGRAFÍA — Inter, servida desde esta misma web (no desde un CDN ajeno):
+   así carga rápido, no depende de nadie y no avisa a terceros de quién
+   visita la página. Licencia SIL Open Font, se puede usar en trabajos de
+   cliente (el texto de la licencia está en assets/fuentes/LICENCIA-Inter.txt).
+   ═══════════════════════════════════════════════════════════════════════ */
+@font-face{font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap;
+  src:url('assets/fuentes/inter-400.woff2') format('woff2')}
+@font-face{font-family:'Inter'; font-style:normal; font-weight:600; font-display:swap;
+  src:url('assets/fuentes/inter-600.woff2') format('woff2')}
+@font-face{font-family:'Inter'; font-style:normal; font-weight:800; font-display:swap;
+  src:url('assets/fuentes/inter-800.woff2') format('woff2')}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   ELEKTRO STIEFEL GMBH — la marca del cliente, no la nuestra.
+   Azul #135AA8 y amarillo #F9EE30, medidos píxel a píxel de su logo.
+   Estructura de ELECTRICISTA: urgencia y confianza primero — teléfono
+   grande y a la vista en todo momento, y el personaje (su enchufe con
+   cara) como anfitrión. Nada de la paleta de Zentraf.
+   ═══════════════════════════════════════════════════════════════════════ */
+:root{
+  --azul:#135AA8; --azul-osc:#0D3F78; --noche:#0A2A50; --azul-claro:#3E82C9;
+  --amarillo:#F9EE30; --amarillo-osc:#E3D514;
+  --tinta:#12212F; --gris:#5C6B7E; --linea:#D9E1EB;
+  --blanco:#ffffff; --hueso:#F2F5F9; --hueso-2:#E8EEF6;
+  --wrap:1300px; --ease:cubic-bezier(.19,1,.22,1);
+  --f:'Inter',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0; background:var(--blanco); color:var(--tinta); font-family:var(--f);
+  font-weight:400; line-height:1.55; -webkit-font-smoothing:antialiased; overflow-x:hidden}
+img,video,svg{max-width:100%; display:block}
+a{color:inherit; text-decoration:none}
+h1,h2,h3,h4{margin:0; font-weight:800; letter-spacing:-.045em; line-height:.95; text-transform:uppercase}
+p{margin:0 0 1em}
+.wrap{width:100%; max-width:var(--wrap); margin:0 auto; padding:0 40px}
+.muted{color:var(--gris)}
+.kicker{font-size:.7rem; letter-spacing:.34em; text-transform:uppercase; color:var(--azul); font-weight:700; margin:0 0 18px}
+.kicker--claro{color:var(--amarillo)}
+.h2{font-size:clamp(1.8rem,4vw,3.4rem); margin-bottom:26px}
+.h2--pequeno{font-size:clamp(1.6rem,3.4vw,2.6rem)}
+section{position:relative}
+::selection{background:var(--azul); color:#fff}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   ESTADOS DE MOVIMIENTO — todo colgado de `html.js`.
+   Si el JavaScript falla, `js` se quita a los 3 segundos y estas reglas
+   dejan de aplicarse: la web se ve ENTERA, sin animaciones y sin nada
+   escondido. Es la red de seguridad de la casa.
+   (Aprendido en la web de LERI: sin el bloque `.dentro` los elementos se
+   quedan en opacidad 0 para siempre — pasó en el primer intento de esta.)
+   ═══════════════════════════════════════════════════════════════════════ */
+html.js [data-anim]{opacity:0; transition:opacity .95s var(--ease),transform .95s var(--ease)}
+html.js [data-anim="up"]{transform:translateY(38px)}
+html.js [data-anim].dentro{opacity:1; transform:none}
+html.js .linea-mask{display:block; overflow:hidden}
+html.js .linea-mask > span{display:block; transform:translateY(110%);
+  transition:transform 1.05s var(--ease)}
+html.js .linea-mask.dentro > span{transform:none}
+/* al llegar desde otra página, el velo ya está cerrado */
+html.viene-de-transicion .velo span{transform:translateY(0)}
+
+/* ══ LOGOTIPO ═══════════════════════════════════════════════════════
+   Sobre fondo oscuro el logo va SIEMPRE en placa blanca: su texto es azul
+   y su cara tiene detalles blancos y amarillos. Nunca se recolorea.       */
+.logo{display:inline-flex; align-items:center}
+.logo img{height:44px; width:auto}
+.placa{background:var(--blanco); padding:10px 14px; border-radius:4px; display:inline-flex; align-items:center}
+.placa--logo img{height:44px; width:auto}
+.placa--logo{padding:9px 13px}
+
+/* ══ CARGA: LA CORRIENTE LLEGA (solo en la primera página del recorrido) ══ */
+.carga{position:fixed; inset:0; z-index:200; background:var(--noche);
+  display:flex; align-items:center; justify-content:center; overflow:hidden}
+/* ⚠️ IMPRESCINDIBLE: el HTML lleva `hidden`, pero `.carga{display:flex}` gana al
+   estilo del navegador y la capa se quedaría ENCIMA DE TODO para siempre si el
+   JavaScript no llega a arrancar. Comprobado con el navegador: sin esta línea,
+   la web entera quedaba tapada por el azul de la carga. Es el modo seguro. */
+.carga[hidden]{display:none}
+.carga__cielo{position:absolute; inset:0;
+  background:radial-gradient(120% 90% at 78% 30%, rgba(19,90,168,.85) 0%, rgba(10,42,80,0) 62%)}
+.carga__caja{position:relative; z-index:3; width:100%; max-width:var(--wrap); margin:0 auto;
+  padding:0 40px; display:grid; grid-template-columns:1.15fr .85fr; gap:40px; align-items:center}
+.carga__lema{color:#fff; font-size:clamp(1.4rem,3.2vw,2.6rem); font-weight:800; letter-spacing:-.04em;
+  text-transform:uppercase; line-height:1.02; margin:26px 0 0}
+.carga__lema em{font-style:normal; color:var(--amarillo)}
+.carga__linea{width:min(420px,72vw); height:3px; background:rgba(255,255,255,.18); margin:30px 0 12px; overflow:hidden}
+.carga__linea i{display:block; height:100%; width:0%; background:var(--amarillo)}
+.carga__num{color:rgba(255,255,255,.75); font-size:.72rem; letter-spacing:.3em}
+.carga__personaje{position:relative; display:flex; justify-content:center}
+.carga__placa{background:var(--blanco); border-radius:8px; padding:18px 18px 0;
+  box-shadow:0 40px 90px rgba(0,0,0,.42)}
+.carga__placa img{height:clamp(200px,30vh,330px); width:auto; margin:0 auto -6px}
+/* el cable: se dibuja de izquierda a derecha y el pulso amarillo lo recorre */
+.carga__pista{position:absolute; left:0; right:0; bottom:clamp(60px,12vh,130px); height:70px; z-index:2}
+.carga__pista svg{width:100%; height:70px; overflow:visible}
+.carga__cable{fill:none; stroke:rgba(255,255,255,.30); stroke-width:3; stroke-linecap:round}
+html.js .carga__cable{stroke-dasharray:var(--largo,3000); stroke-dashoffset:var(--largo,3000);
+  animation:cableDibuja 1.05s cubic-bezier(.5,.05,.3,1) .12s forwards}
+@keyframes cableDibuja{to{stroke-dashoffset:0}}
+.carga__pulso{fill:var(--amarillo); filter:drop-shadow(0 0 10px rgba(249,238,48,.95))}
+html.js .carga__placa{opacity:0; animation:enchufa .8s var(--ease) .28s forwards}
+@keyframes enchufa{from{opacity:0; transform:translateY(28px) scale(.94)} to{opacity:1; transform:none}}
+.carga__nota{position:absolute; left:0; right:0; bottom:26px; z-index:3; text-align:center;
+  color:rgba(255,255,255,.42); font-size:.62rem; letter-spacing:.26em; text-transform:uppercase}
+
+/* velo de transición entre páginas */
+.velo{position:fixed; inset:0; z-index:190; pointer-events:none; display:flex}
+.velo span{flex:1; background:var(--azul); transform:translateY(101%)}
+.velo.activo{pointer-events:all}
+
+/* ══ barra de progreso y cartel de borrador ═════════════════════════ */
+.progreso{position:fixed; top:0; left:0; height:3px; width:0; background:var(--amarillo); z-index:80}
+.aviso{position:fixed; right:0; bottom:0; z-index:70; background:var(--azul); color:#fff;
+  font-size:.6rem; letter-spacing:.18em; text-transform:uppercase; padding:7px 14px; font-weight:700}
+
+/* ══ BARRA DE NAVEGACIÓN ════════════════════════════════════════════ */
+.barra{position:fixed; top:0; left:0; right:0; z-index:90; display:flex; align-items:center;
+  justify-content:space-between; gap:24px; padding:16px 40px; background:rgba(255,255,255,.96);
+  border-bottom:1px solid transparent; transition:padding .5s var(--ease),border-color .4s,box-shadow .4s}
+.barra--solida{border-color:var(--linea); box-shadow:0 8px 26px rgba(18,33,47,.07); padding:10px 40px}
+.barra__menu{display:flex; gap:32px; font-size:.78rem; font-weight:700; letter-spacing:.13em; text-transform:uppercase}
+.barra__menu a{position:relative; padding:8px 0}
+.barra__menu a::after{content:''; position:absolute; left:0; bottom:0; height:3px; width:0;
+  background:var(--amarillo); transition:width .4s var(--ease)}
+.barra__menu a:hover::after,.barra__menu a.activo::after{width:100%}
+.barra__tel{display:inline-flex; align-items:center; gap:10px; background:var(--amarillo); color:var(--azul-osc);
+  padding:13px 20px; font-size:.8rem; font-weight:800; letter-spacing:.06em;
+  transition:background .3s,transform .3s var(--ease)}
+.barra__tel:hover{background:var(--amarillo-osc); transform:translateY(-2px)}
+.barra__tel svg{width:17px; height:17px; flex:none}
+@media (max-width:960px){.barra__menu{display:none} .barra{padding:12px 20px} .barra--solida{padding:9px 20px}}
+/* En un móvil el número NO se esconde: un electricista vive de que le llamen.
+   Se aprieta el espacio (logo más pequeño, menos relleno) pero el número se lee. */
+@media (max-width:520px){
+  .logo img{height:32px}
+  .barra{padding:10px 14px; gap:10px}
+  .barra--solida{padding:8px 14px}
+  .barra__tel{padding:10px 11px; font-size:.7rem; letter-spacing:.02em; gap:6px}
+  .barra__tel svg{width:15px; height:15px}
+}
+
+/* ══ HERO ═══════════════════════════════════════════════════════════
+   Fondo claro a propósito: su personaje es azul con detalles blancos y
+   amarillos — sobre azul desaparecería (comprobado en la captura).       */
+.hero{position:relative; overflow:hidden; background:var(--hueso);
+  padding:clamp(104px,13vh,146px) 0 clamp(46px,7vh,84px)}
+.hero__rejilla{position:absolute; inset:0; opacity:.5;
+  background-image:linear-gradient(var(--hueso-2) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--hueso-2) 1px,transparent 1px);
+  background-size:64px 64px}
+.hero__halo{position:absolute; right:-14%; top:-18%; width:66%; aspect-ratio:1; border-radius:50%;
+  background:radial-gradient(closest-side,rgba(19,90,168,.10),rgba(19,90,168,0))}
+.hero__dos{position:relative; z-index:2; display:grid; grid-template-columns:1.15fr .85fr;
+  gap:clamp(20px,4vw,56px); align-items:center}
+.hero h1{font-size:clamp(1.7rem,3.3vw,3.15rem); line-height:1.06; margin-bottom:24px; color:var(--azul-osc);
+  text-transform:none; letter-spacing:-.035em; max-width:24ch}
+.hero h1 em{font-style:normal; color:var(--azul)}
+.hero__raya{width:66px; height:6px; background:var(--amarillo); margin-bottom:24px}
+.hero__sub{max-width:48ch; font-size:clamp(.98rem,1.25vw,1.1rem); color:var(--gris)}
+.hero__acciones{display:flex; gap:14px; flex-wrap:wrap; align-items:center; margin-top:30px}
+.hero__media{position:relative; display:flex; justify-content:center; align-items:flex-end}
+.hero__media img{height:clamp(270px,42vh,440px); width:auto}
+.hero__datos{position:relative; z-index:2; display:flex; flex-wrap:wrap; gap:10px 34px;
+  margin-top:clamp(30px,5vh,56px); padding-top:22px; border-top:1px solid var(--azul);
+  font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gris); font-weight:600}
+.hero__datos b{color:var(--azul-osc); font-weight:800}
+@media (max-width:900px){
+  .hero__dos{grid-template-columns:1fr; gap:8px}
+  .hero__media{order:-1; justify-content:flex-start}
+  .hero__media img{height:clamp(210px,32vh,300px)}
+  .hero h1{font-size:clamp(1.5rem,6.4vw,2.3rem); max-width:none}
+}
+
+/* el cable de la corriente: se dibuja y el pulso amarillo lo recorre.
+   Va en el flujo normal (no absoluto) para que la línea no se estire en
+   vertical: con `preserveAspectRatio="none"` y una altura fija, el pulso
+   sigue siendo redondo en cualquier pantalla. */
+.corriente{position:relative; z-index:1; height:112px; margin-top:-6px; pointer-events:none}
+.corriente svg{width:100%; height:112px; overflow:visible}
+.corriente__cable{fill:none; stroke:var(--azul); stroke-width:2.5; stroke-linecap:round; opacity:.5}
+html.js .corriente__cable{stroke-dasharray:var(--largo,2400); stroke-dashoffset:var(--largo,2400);
+  animation:cableDibuja 1.8s cubic-bezier(.5,.05,.3,1) .5s forwards}
+.corriente__pulso{fill:var(--amarillo); opacity:0; filter:drop-shadow(0 0 8px rgba(249,238,48,.9))}
+html.js .corriente__pulso{opacity:1}
+
+/* ══ botones ════════════════════════════════════════════════════════ */
+.btn{display:inline-flex; align-items:center; gap:12px; padding:18px 30px; font-size:.82rem; font-weight:800;
+  letter-spacing:.1em; text-transform:uppercase; border:2px solid transparent; cursor:pointer; border-radius:2px;
+  transition:background .35s var(--ease),color .35s,border-color .35s,transform .35s var(--ease)}
+.btn svg{width:19px; height:19px; flex:none}
+.btn--amarillo{background:var(--amarillo); color:var(--azul-osc)}
+.btn--amarillo:hover{background:var(--amarillo-osc); transform:translateY(-3px)}
+.btn--azul{background:var(--azul); color:#fff}
+.btn--azul:hover{background:var(--azul-osc); transform:translateY(-3px)}
+.btn--borde{border-color:var(--azul); color:var(--azul)}
+.btn--borde:hover{background:var(--azul); color:#fff}
+.btn--grande{padding:22px 38px; font-size:.95rem}
+.btn--blanco{background:#fff; color:var(--azul-osc)}
+.btn--blanco:hover{background:var(--amarillo); transform:translateY(-3px)}
+
+/* ══ BANDA DE URGENCIA ══════════════════════════════════════════════
+   Lo que más se pulsa de toda la web. Sin promesas: ellos no dicen en
+   ningún sitio que tengan servicio de 24 horas, así que no se dice.      */
+.urgencia{background:var(--azul-osc); color:#fff; padding:clamp(34px,5vw,54px) 0; position:relative; overflow:hidden}
+.urgencia__rayo{position:absolute; right:-30px; top:-40px; width:260px; height:260px; opacity:.13}
+.urgencia__dos{position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between;
+  gap:26px; flex-wrap:wrap}
+.urgencia__texto{max-width:60ch}
+.urgencia h2{font-size:clamp(1.4rem,2.8vw,2.15rem); margin-bottom:10px}
+.urgencia h2 em{font-style:normal; color:var(--amarillo)}
+.urgencia p{margin:0; color:rgba(255,255,255,.82); font-size:1rem}
+.urgencia__acciones{display:flex; gap:14px; flex-wrap:wrap; align-items:center}
+.urgencia__nota{flex:1 0 100%; margin:6px 0 0; font-size:.7rem; letter-spacing:.16em;
+  text-transform:uppercase; color:rgba(255,255,255,.52)}
+
+/* ══ SERVICIOS ══════════════════════════════════════════════════════ */
+.servicios{padding:clamp(70px,10vw,140px) 0}
+.servicios__cab{display:flex; justify-content:space-between; align-items:flex-end; gap:30px; flex-wrap:wrap}
+.servicios__cab p{max-width:46ch; color:var(--gris); margin:0}
+.rejilla-servicios{display:grid; grid-template-columns:repeat(3,1fr); gap:2px;
+  margin-top:54px; background:var(--linea); border:1px solid var(--linea)}
+.tarjeta{background:#fff; padding:clamp(26px,3vw,40px); transition:background .45s var(--ease),color .45s}
+.tarjeta:hover{background:var(--azul); color:#fff}
+.tarjeta__icono{width:52px; height:52px; margin-bottom:22px; color:var(--azul)}
+.tarjeta:hover .tarjeta__icono{color:var(--amarillo)}
+.tarjeta__icono svg{width:100%; height:100%}
+.tarjeta h3{font-size:1.12rem; margin-bottom:12px; text-transform:none; letter-spacing:-.02em}
+.tarjeta p{color:var(--gris); font-size:.94rem; margin:0}
+.tarjeta:hover p{color:rgba(255,255,255,.86)}
+.tarjeta__lista{list-style:none; margin:16px 0 0; padding:0; font-size:.86rem; color:var(--gris)}
+.tarjeta:hover .tarjeta__lista{color:rgba(255,255,255,.86)}
+.tarjeta__lista li{padding:5px 0 5px 16px; position:relative}
+.tarjeta__lista li::before{content:''; position:absolute; left:0; top:14px; width:8px; height:2px; background:var(--amarillo)}
+.tarjeta--ancha{grid-column:span 2}
+@media (max-width:980px){.rejilla-servicios{grid-template-columns:1fr 1fr} .tarjeta--ancha{grid-column:span 2}}
+@media (max-width:620px){.rejilla-servicios{grid-template-columns:1fr} .tarjeta--ancha{grid-column:span 1}}
+
+/* ══ CONFIANZA (fondo azul de noche) ════════════════════════════════ */
+.vertrauen{background:var(--noche); color:#fff; padding:clamp(70px,10vw,140px) 0}
+.vertrauen .h2{color:#fff}
+.vertrauen__dos{display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(28px,5vw,70px); align-items:start}
+.vertrauen__texto p{color:rgba(255,255,255,.82); font-size:1.06rem}
+.vertrauen__cita{border-left:4px solid var(--amarillo); padding:6px 0 6px 24px; margin:30px 0 0;
+  font-size:clamp(1.05rem,1.9vw,1.4rem); font-weight:600; line-height:1.4; color:#fff}
+.pilares{display:grid; grid-template-columns:1fr 1fr; gap:2px; background:rgba(255,255,255,.16)}
+.pilar{background:var(--noche); padding:26px 28px; transition:background .45s}
+.pilar:hover{background:var(--azul)}
+.pilar b{display:block; font-size:1.9rem; font-weight:800; color:var(--amarillo); letter-spacing:-.05em; line-height:1}
+.pilar span{display:block; margin-top:10px; font-size:.88rem; color:rgba(255,255,255,.72)}
+.pilar:hover span{color:rgba(255,255,255,.92)}
+@media (max-width:900px){.vertrauen__dos{grid-template-columns:1fr}}
+
+/* ══ JEFE / BETRIEB ═════════════════════════════════════════════════ */
+.jefe{padding:clamp(70px,10vw,140px) 0; background:var(--hueso)}
+.jefe__dos{display:grid; grid-template-columns:1fr 1fr; gap:clamp(28px,5vw,70px); align-items:center}
+.jefe__banda img{width:100%; height:auto; border-radius:2px}
+.jefe__banda figcaption{font-size:.72rem; color:var(--gris); margin-top:10px; letter-spacing:.04em}
+.jefe h3{font-size:clamp(1.5rem,3vw,2.3rem); margin-bottom:6px}
+.jefe__puesto{font-size:.76rem; letter-spacing:.24em; text-transform:uppercase; color:var(--azul); font-weight:700}
+.jefe__cv{list-style:none; margin:24px 0 0; padding:0; border-top:1px solid var(--linea)}
+.jefe__cv li{display:flex; gap:16px; padding:13px 0; border-bottom:1px solid var(--linea); font-size:.94rem; color:var(--gris)}
+.jefe__cv b{color:var(--azul-osc); font-weight:800; flex:none; width:56px}
+@media (max-width:860px){.jefe__dos{grid-template-columns:1fr}}
+
+/* ══ REFERENCIAS: las fotos son pequeñas, se muestran pequeñas ══════
+   Las fotos de su web miden 200 × 150 px y NO hay originales más grandes
+   (se pidieron al servidor: las variantes -1024 y -scaled dan 404). Por eso
+   se muestran a su tamaño real, en tarjetas de 200 px, y no se estiran.    */
+.referencias{padding:clamp(70px,10vw,140px) 0}
+.referencias__nota{max-width:62ch; color:var(--gris); font-size:1rem}
+.tira-fotos{display:flex; flex-wrap:wrap; gap:14px; margin-top:44px; padding:0; list-style:none}
+.tira-fotos li{margin:0}
+.foto-mini{width:214px; padding:0; border:1px solid var(--linea); background:#fff; cursor:zoom-in;
+  text-align:left; font-family:inherit; transition:transform .45s var(--ease),box-shadow .45s,border-color .45s}
+.foto-mini:hover{transform:translateY(-4px); box-shadow:0 18px 34px rgba(18,33,47,.13); border-color:var(--azul)}
+.foto-mini img{width:200px; height:150px; object-fit:cover; image-rendering:auto; margin:6px}
+.foto-mini span{display:block; font-size:.72rem; color:var(--gris); padding:0 10px 12px; letter-spacing:.02em}
+.foto-mini:hover span{color:var(--azul-osc)}
+
+/* ══ CONTACTO ═══════════════════════════════════════════════════════ */
+.contacto{padding:clamp(70px,10vw,140px) 0}
+.contacto__rejilla{display:grid; grid-template-columns:1fr 1fr; gap:clamp(34px,6vw,90px); align-items:start}
+.contacto__datos{display:flex; flex-direction:column; gap:2px; margin-top:36px}
+.contacto__datos a,.contacto__datos address{font-style:normal; display:block; padding:19px 0;
+  border-bottom:1px solid var(--linea); font-size:1.1rem; font-weight:600}
+.contacto__datos a:first-child{font-size:clamp(1.6rem,3.4vw,2.6rem); font-weight:800; color:var(--azul); letter-spacing:-.04em}
+.contacto__datos a:hover{color:var(--azul-osc)}
+.contacto__nota{margin-top:40px; padding:26px 28px; background:var(--hueso); border-left:4px solid var(--amarillo)}
+.contacto__nota h4{font-size:1rem; margin-bottom:8px; text-transform:none; letter-spacing:-.01em}
+.contacto__nota p{margin:0; color:var(--gris); font-size:.94rem}
+.form{display:flex; flex-direction:column; gap:18px}
+.form label{display:flex; flex-direction:column; gap:8px; font-size:.7rem; font-weight:700;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--gris)}
+.form input,.form textarea,.form select{font-family:inherit; font-size:1rem; font-weight:400;
+  text-transform:none; letter-spacing:0; color:var(--tinta); background:var(--hueso);
+  border:2px solid transparent; padding:16px; transition:border-color .3s,background .3s; min-height:52px}
+.form input:focus,.form textarea:focus,.form select:focus{outline:0; border-color:var(--azul); background:#fff}
+.form .fila{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+.form__nota{font-size:.78rem; color:var(--gris); text-transform:none; letter-spacing:0; margin:0}
+.form__ok{color:var(--azul); font-weight:700}
+.hp{position:absolute; left:-9999px; width:1px; height:1px; opacity:0}
+@media (max-width:900px){.contacto__rejilla{grid-template-columns:1fr} .form .fila{grid-template-columns:1fr}}
+
+/* ══ PIE ════════════════════════════════════════════════════════════ */
+.pie{background:var(--noche); color:#fff; padding:70px 0 30px}
+.pie__top{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:40px}
+.pie h5{font-size:.7rem; letter-spacing:.24em; text-transform:uppercase; color:var(--amarillo); margin:0 0 18px; font-weight:700}
+.pie a,.pie p{color:rgba(255,255,255,.78); font-size:.92rem}
+.pie a:hover{color:#fff}
+.pie__lista{display:flex; flex-direction:column; gap:12px}
+.pie__dir{margin:0; color:rgba(255,255,255,.78); font-size:.92rem}
+.proyectos__mas{margin-top:38px}
+.pie__logo{margin-bottom:20px}
+.pie__legal{margin-top:52px; border-top:1px solid rgba(255,255,255,.14); padding-top:22px}
+.pie details{margin-bottom:10px}
+.pie summary{cursor:pointer; font-size:.78rem; letter-spacing:.16em; text-transform:uppercase;
+  color:rgba(255,255,255,.72); padding:10px 0}
+.pie summary::marker{color:var(--amarillo)}
+.pie .legal{max-width:88ch; font-size:.84rem; color:rgba(255,255,255,.62); line-height:1.7}
+.pie__credito{margin-top:28px; display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap;
+  font-size:.76rem; color:rgba(255,255,255,.5)}
+@media (max-width:820px){.pie__top{grid-template-columns:1fr; gap:30px}}
+
+/* ══ LIGHTBOX ═══════════════════════════════════════════════════════ */
+.luz{position:fixed; inset:0; z-index:150; background:rgba(10,42,80,.97); display:flex;
+  flex-direction:column; align-items:center; justify-content:center; gap:18px; padding:30px}
+.luz[hidden]{display:none}
+.luz img{max-width:min(1200px,94vw); max-height:80vh; object-fit:contain; image-rendering:pixelated}
+.luz p{color:rgba(255,255,255,.75); font-size:.8rem; letter-spacing:.16em; text-transform:uppercase; margin:0}
+.luz button{position:absolute; top:22px; right:26px; width:46px; height:46px; background:none;
+  border:2px solid rgba(255,255,255,.4); color:#fff; cursor:pointer; font-size:1rem}
+.luz button:hover{border-color:var(--amarillo); color:var(--amarillo)}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   PÁGINAS INTERIORES (Leistungen, Referenzen, Kontakt)
+   ═══════════════════════════════════════════════════════════════════════ */
+.hero-mini{position:relative; min-height:64svh; display:flex; align-items:flex-end; overflow:hidden;
+  background:var(--azul-osc); padding-top:120px}
+.hero-mini--corto{min-height:52svh}
+.hero-mini__fondo{position:absolute; inset:0;
+  background:radial-gradient(90% 120% at 88% 12%, rgba(62,130,201,.9) 0%, rgba(13,63,120,0) 60%),
+             linear-gradient(180deg,#0D3F78 0%,#0A2A50 100%)}
+.hero-mini__media{position:absolute; right:clamp(10px,4vw,70px); bottom:0;
+  height:min(72%,420px); opacity:.42}
+.hero-mini__media img{height:100%; width:auto}
+.hero-mini__texto{position:relative; z-index:2; color:#fff; padding-bottom:max(52px,7vh)}
+.hero-mini h1{font-size:clamp(1.7rem,4vw,3.4rem); line-height:1; margin-bottom:22px}
+.hero-mini__texto > p:last-child{max-width:56ch; color:rgba(255,255,255,.85); font-size:clamp(1rem,1.4vw,1.16rem)}
+
+.lista-servicios{padding:clamp(70px,10vw,140px) 0; background:var(--hueso)}
+.lista-servicios__rejilla{list-style:none; padding:0; margin:46px 0 0; display:grid;
+  grid-template-columns:repeat(3,1fr); gap:2px; background:var(--linea)}
+.lista-servicios__rejilla li{background:var(--hueso); padding:24px 26px; font-size:1rem; font-weight:600;
+  display:flex; gap:14px; align-items:baseline; transition:background .4s,color .4s}
+.lista-servicios__rejilla li::before{content:''; width:16px; height:2px; background:var(--amarillo); flex:none; transform:translateY(-5px)}
+.lista-servicios__rejilla li:hover{background:var(--azul-osc); color:#fff}
+@media (max-width:900px){.lista-servicios__rejilla{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.lista-servicios__rejilla{grid-template-columns:1fr}}
+
+.servicio-largo{padding:clamp(70px,10vw,140px) 0}
+.servicio-largo + .servicio-largo{padding-top:0}
+.servicio-largo__cabeza{display:grid; grid-template-columns:.9fr 1.1fr; gap:clamp(24px,4vw,64px); align-items:start;
+  border-top:3px solid var(--azul); padding-top:32px}
+.servicio-largo__cabeza h2{font-size:clamp(1.6rem,3.2vw,2.7rem); margin-bottom:0}
+.servicio-largo__numero{font-size:.74rem; letter-spacing:.3em; color:var(--azul); font-weight:800; margin-bottom:14px; display:block}
+.servicio-largo__texto p{font-size:1.06rem; color:var(--gris)}
+.servicio-largo__texto ul{list-style:none; padding:0; margin:22px 0 0; border-top:1px solid var(--linea)}
+.servicio-largo__texto li{padding:12px 0; border-bottom:1px solid var(--linea); font-size:.92rem;
+  display:flex; gap:12px; align-items:baseline; color:var(--tinta)}
+.servicio-largo__texto li::before{content:''; width:14px; height:2px; background:var(--azul); flex:none; transform:translateY(-4px)}
+@media (max-width:860px){.servicio-largo__cabeza{grid-template-columns:1fr}}
+
+.nota-referencia{margin-top:44px; padding:26px 28px; background:var(--hueso); border-left:4px solid var(--azul);
+  max-width:74ch}
+.nota-referencia p{margin:0; color:var(--gris); font-size:.98rem}
+.bandas{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:44px}
+.bandas figure{margin:0}
+.bandas img{width:100%; height:auto; border-radius:2px}
+.bandas figcaption{font-size:.74rem; color:var(--gris); margin-top:9px}
+@media (max-width:760px){.bandas{grid-template-columns:1fr}}
+
+.legal-seccion{padding:0 0 clamp(70px,9vw,120px); background:var(--hueso)}
+.legal-seccion .wrap{padding-top:clamp(60px,8vw,110px)}
+.legal-texto{display:grid; grid-template-columns:1fr 1fr; gap:18px 48px; margin:26px 0 60px}
+.legal-texto p{margin:0; color:var(--gris); font-size:.98rem; line-height:1.7}
+@media (max-width:820px){.legal-texto{grid-template-columns:1fr; margin-bottom:44px}}
+
+/* ══ ACCESIBILIDAD Y DEDOS (móvil) ══════════════════════════════════ */
+:focus-visible{outline:3px solid var(--azul); outline-offset:3px}
+.pie__lista a, .pie__credito a, .legal a, .legal-texto a, .form__nota a, .pie__lista p{
+  display:inline-flex; align-items:center; min-height:26px; padding:3px 0}
+.pie__lista a{padding:6px 0; min-height:30px}
+.pie summary{min-height:38px; display:flex; align-items:center}
+.form__nota a, .legal-texto a{text-decoration:underline; text-underline-offset:3px}
+.contacto__nota a, .nota-referencia a, .jefe p a, .vertrauen p a{
+  display:inline-flex; align-items:center; min-height:26px; text-decoration:underline; text-underline-offset:3px}
+@media (max-width:900px){
+  .contacto__datos a, .contacto__datos address{padding:16px 0; min-height:44px}
+}
+@media (prefers-reduced-motion:reduce){
+  html.js [data-anim]{opacity:1 !important; transform:none !important}
+  html.js .linea-mask > span{transform:none !important}
+  html.js .carga__cable, html.js .corriente__cable{stroke-dashoffset:0 !important; animation:none !important}
+  html.js .carga__placa{opacity:1 !important; animation:none !important}
+  html.js .corriente__pulso{opacity:0 !important}
+  html.js .corriente__chispa{opacity:.95 !important; animation:none !important}
+  *{transition-duration:.01ms !important; animation-duration:.01ms !important}
+}
+
+/* ══ MÓVIL: que el hero quepa entero ════════════════════════════════ */
+@media (max-width:680px){
+  .wrap{padding:0 24px}
+  .hero{padding-top:100px}
+  .hero__acciones .btn{flex:1 1 auto; justify-content:center}
+  .carga__caja{grid-template-columns:1fr; text-align:center; padding:0 24px; gap:18px}
+  .carga__personaje{order:-1}
+  .carga__placa img{height:clamp(140px,22vh,200px)}
+  .carga__linea{margin:22px auto 12px}
+  .carga__pista{bottom:34px; height:54px}
+  .carga__nota{display:none}
+  .hero__datos{gap:8px 20px; font-size:.62rem}
+}

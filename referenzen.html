@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Referenzen — Bilder aus unserem Alltag | Elektro Stiefel GmbH Zürich-Höngg</title>
+<meta name="description" content="Bilder aus dem Betrieb von Elektro Stiefel GmbH in Zürich-Höngg: Verteiler, Schaltschränke, Messungen, Installationen und Baustellen. Referenzen nach Absprache mit den Kunden.">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Elektro Stiefel GmbH">
+<meta property="og:title" content="Referenzen — Elektro Stiefel GmbH">
+<meta property="og:description" content="Verteiler, Schaltschränke, Messungen und Baustellen aus unserem Alltag in Zürich.">
+<meta property="og:image" content="https://zentraf-official.github.io/elektro-stiefel/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="theme-color" content="#135AA8">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon.png" sizes="512x512">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<link rel="preload" as="font" type="font/woff2" href="assets/fuentes/inter-800.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fuentes/inter-400.woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+<script>
+  /* Alles, was animiert wird, startet nur, wenn JavaScript läuft: falls etwas schiefgeht,
+     zeigt die Seite nach 3 Sekunden alles ohne Animation. Niemand sieht eine leere Seite. */
+  document.documentElement.classList.add('js');
+  try {
+    if (sessionStorage.getItem('stiefel-transicion')) {
+      document.documentElement.classList.add('viene-de-transicion');
+      sessionStorage.removeItem('stiefel-transicion');
+    }
+  } catch (e) {}
+  setTimeout(function () {
+    if (!window.__stiefelListo) document.documentElement.classList.remove('js');
+  }, 3000);
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Electrician",
+  "name": "Elektro Stiefel GmbH",
+  "telephone": "+41443411717",
+  "email": "info@elektro-stiefel.ch",
+  "url": "https://zentraf-official.github.io/elektro-stiefel/referenzen.html",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Limmattalstrasse 67",
+    "postalCode": "8049",
+    "addressLocality": "Zürich",
+    "addressCountry": "CH"
+  }
+}
+</script>
+</head>
+<body>
+
+<!-- ══ LADEANIMATION: DIE KORRIENTE KOMMT AN (nur auf der ersten Seite des Besuchs) ══ -->
+<div class="carga" id="carga" hidden>
+  <div class="carga__cielo"></div>
+  <div class="carga__caja">
+    <div>
+      <span class="placa placa--logo"><img src="assets/logo.png" alt="Elektro Stiefel GmbH" width="1000" height="282"></span>
+      <p class="carga__lema">Wir sind für Sie da,<br><em>auch wenn's mal dunkel wird.</em></p>
+      <div class="carga__linea"><i id="cargaBarra"></i></div>
+      <div class="carga__num"><span id="cargaNum">0</span> %</div>
+    </div>
+    <div class="carga__personaje">
+      <div class="carga__placa">
+        <img src="assets/personaje.png" alt="" width="620" height="848">
+      </div>
+    </div>
+  </div>
+  <div class="carga__pista" aria-hidden="true">
+    <svg id="cargaSvg" viewBox="0 0 1400 90" preserveAspectRatio="none">
+      <path id="cargaCable" class="carga__cable" vector-effect="non-scaling-stroke"
+            d="M-10 62 C 180 62, 240 14, 420 14 S 700 76, 880 76 S 1160 22, 1410 22"></path>
+      <circle id="cargaPulso" class="carga__pulso" cx="0" cy="62" r="7"></circle>
+    </svg>
+  </div>
+  <p class="carga__nota">Elektro Stiefel GmbH · Zürich-Höngg</p>
+</div>
+
+<!-- ══ VORHANG FÜR DEN SEITENWECHSEL ══ -->
+<div class="velo" id="velo" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+
+<div class="progreso" id="progreso"></div>
+<div class="aviso">Entwurf · Vorschau von Zentraf</div>
+
+<!-- ══ KOPFZEILE ══ -->
+<header class="barra" id="barra">
+  <a class="logo" href="index.html" aria-label="Elektro Stiefel GmbH — Startseite">
+    <img src="assets/logo.png" alt="Elektro Stiefel GmbH" width="1000" height="282">
+  </a>
+  <nav class="barra__menu" id="menu">
+    <a href="index.html" data-pagina="index">Start</a>
+    <a href="leistungen.html" data-pagina="leistungen">Leistungen</a>
+    <a href="referenzen.html" data-pagina="referenzen">Referenzen</a>
+    <a href="kontakt.html" data-pagina="kontakt">Kontakt</a>
+  </nav>
+  <a class="barra__tel" href="tel:+41443411717">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 3h2.8l1.5 4.3-1.9 1.4a13.2 13.2 0 0 0 5.9 5.9l1.4-1.9L20.6 14v2.8a2 2 0 0 1-2.2 2A16.8 16.8 0 0 1 4.6 5.2 2 2 0 0 1 6.6 3Z"/></svg>
+    <span class="telf">044 341 17 17</span>
+  </a>
+</header>
+
+<main>
+
+<section class="hero-mini hero-mini--corto">
+  <div class="hero-mini__fondo"></div>
+  <div class="hero-mini__media" aria-hidden="true"><img src="assets/personaje.png" alt="" width="620" height="848"></div>
+  <div class="wrap hero-mini__texto">
+    <p class="kicker kicker--claro">Referenzen</p>
+    <h1 data-lineas>Ein Blick<br>in unsere Arbeit.</h1>
+    <p data-anim="up">Bilder aus unserem Alltag: Verteiler, Schaltschränke, Messungen und Baustellen in
+      Zürich. Gerne geben wir Ihnen Referenzen nach vorheriger Absprache mit den Kunden ab.</p>
+  </div>
+</section>
+
+<section class="referencias">
+  <div class="wrap">
+    <p class="kicker" data-anim="up">Aus dem Betrieb</p>
+    <h2 class="h2" data-lineas>Was wir täglich machen</h2>
+    <p class="referencias__nota" data-anim="up">Diese Bilder stammen aus dem Archiv unserer bisherigen
+      Website. Neue Aufnahmen von abgeschlossenen Arbeiten folgen — fragen Sie uns einfach nach
+      Referenzen aus Ihrem Bereich.</p>
+
+    <ul class="tira-fotos">
+      <li data-anim="up"><button class="foto-mini" data-src="assets/fotos/schaltschrank-200.jpg" data-cap="Verdrahtung im Schaltschrank">
+        <img src="assets/fotos/schaltschrank-200.jpg" alt="Elektriker verdrahtet einen Schaltschrank" width="200" height="150" loading="lazy"><span>Schaltschrank</span></button></li>
+      <li data-anim="up"><button class="foto-mini" data-src="assets/fotos/verteiler-200.jpg" data-cap="Arbeit am Verteiler">
+        <img src="assets/fotos/verteiler-200.jpg" alt="Elektriker bei der Arbeit am Verteiler" width="200" height="150" loading="lazy"><span>Verteiler</span></button></li>
+      <li data-anim="up"><button class="foto-mini" data-src="assets/fotos/messung-200.jpg" data-cap="Messung mit dem Multimeter">
+        <img src="assets/fotos/messung-200.jpg" alt="Messung an einer Installation mit dem Multimeter" width="200" height="150" loading="lazy"><span>Messung</span></button></li>
+      <li data-anim="up"><button class="foto-mini" data-src="assets/fotos/installation-200.jpg" data-cap="Installation im Sicherungskasten">
+        <img src="assets/fotos/installation-200.jpg" alt="Installation im Sicherungskasten" width="200" height="150" loading="lazy"><span>Installation</span></button></li>
+      <li data-anim="up"><button class="foto-mini" data-src="assets/fotos/plan-200.jpg" data-cap="Planstudium auf der Baustelle">
+        <img src="assets/fotos/plan-200.jpg" alt="Elektriker studiert einen Plan auf der Baustelle" width="200" height="150" loading="lazy"><span>Planstudium</span></button></li>
+      <li data-anim="up"><button class="foto-mini" data-src="assets/fotos/lager-200.jpg" data-cap="Lager mit Kabelrollen und Werkzeug">
+        <img src="assets/fotos/lager-200.jpg" alt="Lager mit Kabelrollen und Werkzeug" width="200" height="150" loading="lazy"><span>Lager</span></button></li>
+      <li data-anim="up"><button class="foto-mini" data-src="assets/fotos/fahrzeug-200.jpg" data-cap="Unterwegs in Zürich">
+        <img src="assets/fotos/fahrzeug-200.jpg" alt="Fahrzeug von Elektro Stiefel unterwegs in Zürich" width="200" height="150" loading="lazy"><span>Unterwegs</span></button></li>
+      <li data-anim="up"><button class="foto-mini" data-src="assets/fotos/buero-200.jpg" data-cap="Büro und Auftragsannahme">
+        <img src="assets/fotos/buero-200.jpg" alt="Büro mit Unterlagen bei Elektro Stiefel" width="200" height="150" loading="lazy"><span>Büro</span></button></li>
+      <li data-anim="up"><button class="foto-mini" data-src="assets/fotos/buero-2-200.jpg" data-cap="Arbeitsplatz im Büro">
+        <img src="assets/fotos/buero-2-200.jpg" alt="Arbeitsplatz im Büro von Elektro Stiefel" width="200" height="150" loading="lazy"><span>Arbeitsplatz</span></button></li>
+      <li data-anim="up"><button class="foto-mini" data-src="assets/fotos/eingang-200.jpg" data-cap="Eingang mit Firmenschild">
+        <img src="assets/fotos/eingang-200.jpg" alt="Eingang mit Firmenschild von Elektro Stiefel" width="200" height="150" loading="lazy"><span>Eingang</span></button></li>
+      <li data-anim="up"><button class="foto-mini" data-src="assets/fotos/eingang-2-200.jpg" data-cap="Firmenschild am Eingang">
+        <img src="assets/fotos/eingang-2-200.jpg" alt="Firmenschild von Elektro Stiefel am Eingang" width="200" height="150" loading="lazy"><span>Firmenschild</span></button></li>
+    </ul>
+
+    <div class="bandas">
+      <figure data-anim="up">
+        <img src="assets/fotos/lager-band-980.jpg" alt="Lager von Elektro Stiefel mit Werkzeug an der Wand" width="980" height="300" loading="lazy">
+        <figcaption>Unser Lager: Werkzeug und Material für den nächsten Einsatz.</figcaption>
+      </figure>
+      <figure data-anim="up">
+        <img src="assets/fotos/team-band-980.jpg" alt="Beat Stiefel vor dem Firmenschild in Zürich-Höngg" width="980" height="300" loading="lazy">
+        <figcaption>An der Limmattalstrasse 67 in Zürich-Höngg.</figcaption>
+      </figure>
+    </div>
+
+    <div class="nota-referencia" data-anim="up">
+      <p>Gerne geben wir Ihnen Referenzen nach vorheriger Absprache mit den Kunden ab. Rufen Sie uns an
+        unter <a href="tel:+41443411717">044 341 17 17</a> — wir erzählen Ihnen, was wir schon gemacht haben.</p>
+    </div>
+  </div>
+</section>
+
+<section class="urgencia">
+  <svg class="urgencia__rayo" viewBox="0 0 48 48" fill="none" stroke="#F9EE30" stroke-width="2.4" stroke-linejoin="round" aria-hidden="true">
+    <path d="M27 3 9 28h11l-4 17 19-26H23z"/>
+  </svg>
+  <div class="wrap urgencia__dos">
+    <div class="urgencia__texto">
+      <p class="kicker kicker--claro" data-anim="up">Und jetzt Ihr Projekt</p>
+      <h2 data-lineas>Erzählen Sie uns, <em>was es braucht.</em></h2>
+      <p data-anim="up">Ein Umbau, ein Neubau, eine Reparatur oder ein Anschluss, der einfach gemacht
+        werden muss — wir schauen es uns an und sagen Ihnen offen, was möglich ist.</p>
+    </div>
+    <div class="urgencia__acciones" data-anim="up">
+      <a class="btn btn--amarillo btn--grande" href="tel:+41443411717">044 341 17 17</a>
+      <a class="btn btn--borde" style="border-color:rgba(255,255,255,.45); color:#fff" href="kontakt.html">Anfrage senden</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ══ FUSSZEILE ══ -->
+<footer class="pie">
+  <div class="wrap">
+    <div class="pie__top">
+      <div>
+        <span class="placa placa--logo pie__logo"><img src="assets/logo.png" alt="Elektro Stiefel GmbH" width="1000" height="282"></span>
+        <p>Ihr Elektriker in Zürich-Höngg: Elektroinstallationen, Starkstrom, Wärme, Licht, TV-HiFi, Internet,
+          Telefon und Küchengeräte.</p>
+      </div>
+      <div>
+        <h5>Kontakt</h5>
+        <div class="pie__lista">
+          <a href="tel:+41443411717">044 341 17 17</a>
+          <a href="mailto:info@elektro-stiefel.ch">info@elektro-stiefel.ch</a>
+          <p class="pie__dir">Limmattalstrasse 67<br>8049 Zürich</p>
+        </div>
+      </div>
+      <div>
+        <h5>Seiten</h5>
+        <div class="pie__lista">
+          <a href="index.html">Start</a>
+          <a href="leistungen.html">Leistungen</a>
+          <a href="referenzen.html">Referenzen</a>
+          <a href="kontakt.html">Kontakt</a>
+        </div>
+      </div>
+    </div>
+    <div class="pie__legal">
+      <details>
+        <summary>Impressum</summary>
+        <div class="legal">
+          <p>Elektro Stiefel GmbH · Limmattalstrasse 67 · 8049 Zürich · Schweiz<br>
+             Telefon 044 341 17 17 · Fax 044 342 12 62 · info@elektro-stiefel.ch<br>
+             UID: CHE-338.002.150</p>
+          <p>Vertretungsberechtigt: Beat Stiefel, Geschäftsführer.<br>
+             Handelsregister- und MWST-Nummer ergänzen wir gerne auf Angabe des Kunden.</p>
+          <p>Illustration des Maskottchens: auf Basis des Kundenlogos erstellt.</p>
+        </div>
+      </details>
+      <details id="datenschutz">
+        <summary>Datenschutz</summary>
+        <div class="legal">
+          <p>Wir erheben nur die Daten, die Sie uns über das Kontaktformular, per E-Mail oder telefonisch
+             mitteilen (Name, Kontaktdaten, Beschreibung Ihres Anliegens). Diese Angaben verwenden wir
+             ausschliesslich zur Bearbeitung Ihrer Anfrage und geben sie nicht an Dritte weiter.</p>
+          <p>Diese Website setzt keine Cookies zu Werbezwecken und benutzt keine Analyse- oder
+             Tracking-Dienste. Sie können jederzeit Auskunft über Ihre gespeicherten Daten oder deren
+             Löschung verlangen: info@elektro-stiefel.ch.</p>
+        </div>
+      </details>
+      <div class="pie__credito">
+        <span>© <span id="anio">2026</span> Elektro Stiefel GmbH</span>
+        <span>Entwurf und Umsetzung: Zentraf</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ══ BILDANSICHT ══ -->
+<div class="luz" id="luz" hidden role="dialog" aria-modal="true" aria-label="Bildansicht">
+  <button id="luzCerrar" aria-label="Schliessen">✕</button>
+  <img id="luzImg" src="" alt="">
+  <p id="luzCap"></p>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

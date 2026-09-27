@@ -1,0 +1,6 @@
+# Material de trabajo: no se publica. Su web vieja y su personaje viven en la
+# carpeta del cliente (elektro-stiefel/), fuera de este repositorio.
+web-vieja/
+*.psd
+*.mov
+.DS_Store
